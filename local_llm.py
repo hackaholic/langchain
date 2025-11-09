@@ -1,8 +1,8 @@
 from dotenv import load_dotenv
+
 from langchain_core.prompts import PromptTemplate
-#from langchain_openai import ChatOpenAI
-#from langchain_google_vertexai import ChatVertexAI
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_ollama import ChatOllama
 
 load_dotenv()
 
@@ -23,26 +23,17 @@ Musk's political activities, views, and statements have made him a polarizing fi
      1. A short summary
      2. Two interesting facts about them
      """
-    summary_prompt_template = PromptTemplate(
-        input_variables=["information"], template=summary_template)
     
-    #llm = ChatOpenAI(temperature=0, model="gpt-5")
-    llm = ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash",
-        temperature=0,
-        max_tokens=None,
-        max_retries=6,
-        stop=None,
-    )
+    summary_prompt_template = PromptTemplate(input_variable=["information"], template=summary_template)
     
+    llm = ChatOllama(temperature=0, model="gemma3:270m")
     
-    chain = summary_prompt_template | llm  # langchain expression language (LCEL)
+    chain = summary_prompt_template | llm
+    
     res = chain.invoke(input={"information": information})
-    #import pdb;pdb.set_trace();
+    
     print(res.content)
-    
-    
 
-
+    
 if __name__ == "__main__":
     main()

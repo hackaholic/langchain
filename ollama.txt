@@ -1,0 +1,13 @@
+Ollama install
+curl -fsSL https://ollama.com/install.sh | sh
+
+
+Start Ollama server
+ollama server
+
+Pull a model
+ollama pull gemma3:270m
+
+run a model
+ollama run gemma3:270
+
